@@ -32,12 +32,26 @@ const App = () => {
     }
   }
 
+  const handleLogout = async (event) => {
+    event.preventDefault()
+    window.localStorage.clear()
+    window.location.reload(false)
+  }
+
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )  
   }, [])
 
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      blogService.setToken(user.token)
+    }
+  }, [])
 
   const loginForm = () => (
     <form onSubmit={handleLogin}>
@@ -61,13 +75,20 @@ const App = () => {
         />
       </div>
       <button type="submit">login</button>
-    </form>      
+    </form>
+  )
+
+  const userInfo = () => ( 
+      <h2> 
+        Logged in as: {user.name} 
+        <button type="submit" onClick={handleLogout}> logout </button>
+      </h2>      
   )
 
   return (
     <div>
       
-      {!user && loginForm()} 
+      {user ? userInfo() : loginForm()} 
 
       <h2>Blogs</h2>
       {blogs.map(blog =>
