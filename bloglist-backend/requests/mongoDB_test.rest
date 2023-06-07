@@ -5,10 +5,10 @@ content-type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYzNzYyMmY5NWVjNWQyNWE4MDIwYmVmMiIsImlhdCI6MTY2ODc2MzU3M30.QubEvpBJsiSjky0FcVlTBzRKhoL_TOgppT5o2_6FeMU
 
 {
-    "title": "Saved blog with middleware active as root",
-    "author": "Jane Doe",
-    "url": "BlogsFromJaneDoe.org/43527845278",
-    "likes": 15
+    "title": "Test run",
+    "author": "TEST",
+    "url": "bing.com",
+    "likes": 5
 }
 
 ### get all saved blogs. 

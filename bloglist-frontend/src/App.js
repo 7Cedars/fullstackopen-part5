@@ -5,6 +5,7 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [newBlog, setNewBlog] = useState({title: '', author: '', url: ''})
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
@@ -53,6 +54,25 @@ const App = () => {
     }
   }, [])
 
+
+  const addBlog = (event) => {
+    
+    const blogObject = {
+      title: newBlog.title,
+      author: newBlog.author,
+      url: newBlog.url,
+      likes: 0
+    }
+
+    blogService
+      .create(blogObject)
+      .then(returnedBlog => {
+        setBlogs(blogs.concat(returnedBlog))
+        setNewBlog({title: '', author: '', url: ''})
+      })
+  }
+
+
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <h2>Login</h2>
@@ -85,10 +105,55 @@ const App = () => {
       </h2>      
   )
 
+  const newBlogForm = () => (
+    <form onSubmit={addBlog}>
+      <h2>New Blog Entry</h2>
+      <div>
+        title:
+          <input
+          type="text"
+          value={newBlog.title}
+          name="Title"
+          onChange={({ target }) => setNewBlog({
+            ...newBlog,
+            title: target.value
+          })}
+
+        />
+      </div>
+      <div>
+        author:
+          <input
+          type="text"
+          value={newBlog.author}
+          name="Author"
+          onChange={({ target }) => setNewBlog({
+            ...newBlog,
+            author: target.value
+          })}
+        />
+      </div>
+      <div>
+        url:
+          <input
+          type="text"
+          value={newBlog.url}
+          name="Url"
+          onChange={({ target }) => setNewBlog({
+            ...newBlog,
+            url: target.value
+          })}
+        />
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  )
+
   return (
     <div>
       
       {user ? userInfo() : loginForm()} 
+      {user && newBlogForm()} 
 
       <h2>Blogs</h2>
       {blogs.map(blog =>
