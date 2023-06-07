@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -7,6 +8,7 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [newBlog, setNewBlog] = useState({title: '', author: '', url: ''})
   const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
@@ -26,7 +28,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setErrorMessage('Wrong credentials')
+      setErrorMessage('Wrong username or password')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -56,21 +58,36 @@ const App = () => {
 
 
   const addBlog = (event) => {
-    
-    const blogObject = {
-      title: newBlog.title,
-      author: newBlog.author,
-      url: newBlog.url,
-      likes: 0
-    }
+      event.preventDefault()
+      const blogObject = {
+        title: newBlog.title,
+        author: newBlog.author,
+        url: newBlog.url,
+        likes: 0
+      }
 
-    blogService
-      .create(blogObject)
-      .then(returnedBlog => {
-        setBlogs(blogs.concat(returnedBlog))
-        setNewBlog({title: '', author: '', url: ''})
-      })
-  }
+      blogService
+        .create(blogObject)
+        .then(returnedBlog => {
+          setBlogs(blogs.concat(returnedBlog))
+          setNewBlog({title: '', author: '', url: ''})
+          setSuccessMessage(
+            `Success! Blog '${blogObject.title}' by '${blogObject.author}' was saved.`
+          )
+          setTimeout(() => {
+            setSuccessMessage(null)
+          }, 5000)
+        })
+        .catch(error => {
+          setErrorMessage(
+            `Blog '${blogObject.title}' was not saved. That's all I know!`
+          )
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        })
+
+    } 
 
 
   const loginForm = () => (
@@ -151,7 +168,8 @@ const App = () => {
 
   return (
     <div>
-      
+      <Notification.Success message={successMessage} />
+      <Notification.Error message={errorMessage} />
       {user ? userInfo() : loginForm()} 
       {user && newBlogForm()} 
 
