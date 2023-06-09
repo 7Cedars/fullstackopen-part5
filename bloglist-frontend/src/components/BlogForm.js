@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const BlogForm = ({ createBlog }) => {
+const BlogForm = ({ createBlog, user }) => {
 
     const [newBlog, setNewBlog] = useState({title: '', author: '', url: ''})
 
@@ -10,6 +10,7 @@ const BlogForm = ({ createBlog }) => {
           title: newBlog.title,
           author: newBlog.author,
           url: newBlog.url,
+          user: user,
           likes: 0
         })
     

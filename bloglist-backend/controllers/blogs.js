@@ -23,7 +23,7 @@ blogsRouter.post('/', tokenExtractor, userExtractor, async (request, response) =
   
   blog.likes ? blog.likes = blog.likes : blog.likes = 0
   
-  blog.user = request.user.id
+  blog.user = request.user
   const savedBlog = await blog.save()
 
   request.user.blogs = request.user.blogs.concat(savedBlog.id)

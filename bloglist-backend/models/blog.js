@@ -11,7 +11,7 @@ const blogSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'},
     url: {
-      type: String,
+      type: String, // should be URL - but have to clean database before I can do this.. 
     },
     likes: Number
   })

@@ -30,6 +30,7 @@ const App = () => {
       setUser(user)
       setUsername('')
       setPassword('')
+      console.log("User: ", user)
     } catch (exception) {
       setErrorMessage('Wrong username or password')
       setTimeout(() => {
@@ -65,8 +66,8 @@ const App = () => {
     blogService
       .create(blogObject)
       .then(returnedBlog => {
+        console.log("returnedBlog: ", returnedBlog)
         setBlogs(blogs.concat(returnedBlog))
-        // setNewBlog({title: '', author: '', url: ''})
         setSuccessMessage(
           `Success! Blog '${blogObject.title}' by '${blogObject.author}' was saved.`
         )
@@ -83,61 +84,6 @@ const App = () => {
         }, 5000)
       })
     } 
-
-
-  // From here should be deleted
-  // const newBlogForm = () => (
-  //   <form onSubmit={addBlog}>
-  //     <h2>New Blog Entry</h2>
-  //     <div>
-  //       title:
-  //         <input
-  //         type="text"
-  //         value={newBlog.title}
-  //         name="Title"
-  //         onChange={({ target }) => setNewBlog({
-  //           ...newBlog,
-  //           title: target.value
-  //         })}
-
-  //       />
-  //     </div>
-  //     <div>
-  //       author:
-  //         <input
-  //         type="text"
-  //         value={newBlog.author}
-  //         name="Author"
-  //         onChange={({ target }) => setNewBlog({
-  //           ...newBlog,
-  //           author: target.value
-  //         })}
-  //       />
-  //     </div>
-  //     <div>
-  //       url:
-  //         <input
-  //         type="text"
-  //         value={newBlog.url}
-  //         name="Url"
-  //         onChange={({ target }) => setNewBlog({
-  //           ...newBlog,
-  //           url: target.value
-  //         })}
-  //       />
-  //     </div>
-  //     <button type="submit">Submit</button>
-  //   </form>
-  // )
-  // until here should be deleted
-
-  // const blogForm = () => (
-  //   <Togglable buttonLabel='add new blog' ref={blogFormRef}>
-  //     <blogForm 
-  //       createBlog={addBlog} 
-  //     />
-  //   </Togglable>
-  // )
 
   const loginForm = () => (
     <form onSubmit={handleLogin}>
@@ -182,7 +128,8 @@ const App = () => {
           {/* { blogForm() }  */}
           <Togglable buttonLabel="add new blog" ref={blogFormRef}>
             <BlogForm 
-              createBlog={addBlog} />
+              createBlog={addBlog} 
+              user = {user}/>
           </Togglable>
         </div>
       }
