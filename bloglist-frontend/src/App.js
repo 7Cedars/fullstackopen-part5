@@ -45,9 +45,14 @@ const App = () => {
     window.location.reload(false)
   }
 
+  const compareLikes = (a, b) => {
+    return a.likes - b.likes;
+  }
+
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
+    blogService
+      .getAll()
+      .then(blogs => setBlogs( blogs.sort(compareLikes) )
     )  
   }, [])
 
