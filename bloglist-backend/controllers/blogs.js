@@ -35,23 +35,24 @@ blogsRouter.post('/', tokenExtractor, userExtractor, async (request, response) =
 
 blogsRouter.delete('/:id', tokenExtractor, userExtractor, async (request, response) => {
   
-  try {
-    const blog = await Blog.findById(request.params.id)
-    const userid = request.user.id
+  const blog = await Blog.findById(request.params.id)
+  const userid = request.user.id
 
-    if ( blog.user.toString() === userid.toString() ){
+   // if ( blog.user.toString() === userid.toString() ){ // Witht his ONLY creator of blogs can delete blogs. 
       await Blog.findByIdAndRemove(request.params.id)
       response.status(204).json(request.params.id)
-    } 
-  } catch {
-    response.status(401).end()
-  }
+   // }
+
 })
 
 // ok, so this is not the most efficient way.. but it works! 
 blogsRouter.put('/:id', tokenExtractor, userExtractor, async (request, response) => {
   const update = request.body
   const originalBlog = await Blog.findById(request.params.id)
+    .populate('user', { 
+      username: 1, 
+      name: 1 })
+
   let updatedBlog = originalBlog
 
   if (!(originalBlog)) {response.status(404).end()}
@@ -61,10 +62,11 @@ blogsRouter.put('/:id', tokenExtractor, userExtractor, async (request, response)
   update.url ? updatedBlog.url = update.url : null
   update.likes ? updatedBlog.likes = update.likes : null
 
-  console.log('updatedBlog: ', updatedBlog)
-
   savedBlog = await Blog.findByIdAndUpdate(request.params.id, updatedBlog, { new: true })
-  response.status(204).json(savedBlog)
+  
+  // Blog.findById(request.params.id)
+  // response.status(204).json(originalBlog)
+  response.json(originalBlog)    
 
 })
 

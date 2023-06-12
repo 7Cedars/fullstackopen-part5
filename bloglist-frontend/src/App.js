@@ -66,7 +66,6 @@ const App = () => {
     blogService
       .create(blogObject)
       .then(returnedBlog => {
-        console.log("returnedBlog: ", returnedBlog)
         setBlogs(blogs.concat(returnedBlog))
         setSuccessMessage(
           `Success! Blog '${blogObject.title}' by '${blogObject.author}' was saved.`
@@ -83,7 +82,41 @@ const App = () => {
           setErrorMessage(null)
         }, 5000)
       })
-    } 
+  } 
+
+  const addLikes = (id, newLikes, property) => {
+    console.log("id:", id)
+    console.log("blogs:", blogs)
+    let index = blogs.findIndex(blog => blog.id === id)
+    const blog = blogs.find(b => b.id ===id)
+    const changedBlog = { ...blog, likes: newLikes }
+
+    console.log("index: ", index)
+    console.log("changedBlog: ", changedBlog)
+    
+    blogService
+        .update(id, changedBlog)
+        .then(returnedBlog => {
+          setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
+        })
+        .catch(error => {
+          setErrorMessage(
+            `Additional like was not saved. Full error message: ${error}`
+          )
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+        })
+  }  
+
+  const removeBlogs = (id) => {
+    console.log("id :", id)
+    
+    blogService
+        .deleteItem(id)
+        .then(setBlogs(blogs.filter(blog => blog.id !== id ))) 
+  }
+
 
   const loginForm = () => (
     <form onSubmit={handleLogin}>
@@ -136,7 +169,10 @@ const App = () => {
 
       <h2>Blogs</h2>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} 
+        blog={blog} 
+        addLikes={addLikes}
+        removeBlogs = {removeBlogs} />
       )}
     </div>
   )
