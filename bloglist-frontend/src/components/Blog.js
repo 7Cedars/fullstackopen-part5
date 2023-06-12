@@ -39,10 +39,10 @@ const Blog = ({ blog, addLikes, removeBlogs }) => {
 
       {details ?
         <div>
-          <div> {`Url: '${blog.url}' `}  </div>
-          <div> {`Likes: '${blog.likes}' `} <button onClick={addLike}> Like </button> </div>
-          <div> {`Created by: '${blog.user.name}' `} </div>
-          <div> <button onClick={removeBlog}> Remove </button> </div>
+          <div className="blogUrls"> {`Url: '${blog.url}' `} </div>
+          <div className="blogLikes"> {`Likes: '${blog.likes}' `} <button onClick={addLike}> Like </button> </div>
+          <div className="blogUsername"> {`Created by: '${blog.user.name}' `} </div>
+          <div className="blogRemoveButton"> <button onClick={removeBlog}> Remove </button> </div>
         </div>
         : null
       }

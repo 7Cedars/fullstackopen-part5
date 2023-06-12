@@ -24,7 +24,7 @@ const BlogForm = ({ createBlog, user }) => {
 
   BlogForm.propTypes = {
     createBlog: PropTypes.func.isRequired,
-    user: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
   }
 
   return (
