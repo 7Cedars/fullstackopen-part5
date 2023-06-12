@@ -1,6 +1,7 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
 
 describe('Togglable Blog Component', () => {
@@ -34,5 +35,18 @@ describe('Togglable Blog Component', () => {
     const likesElement = screen.queryByText('Likes')
     expect(likesElement).toBeNull()
   })
+
+  test('after clicking the view button, detailed content is displayed', async () => {
+    const user = userEvent.setup()
+    const button = screen.getByText('view')
+    await user.click(button)
+
+    const urlElement = container.querySelector('.blogUrls')
+    expect(urlElement).toBeDefined()
+
+    const likesElement = screen.queryByText('Likes')
+    expect(likesElement).toBeDefined()
+  })
+
 })
 
