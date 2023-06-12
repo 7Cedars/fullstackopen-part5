@@ -116,10 +116,16 @@ const App = () => {
 
   const removeBlogs = (id) => {
     console.log("id :", id)
-    
-    blogService
-        .deleteItem(id)
-        .then(setBlogs(blogs.filter(blog => blog.id !== id ))) 
+    const blog = blogs.find(b => b.id ===id)
+
+    if (window.confirm(`Do you really want to delete ${blog.title}?`)) {
+      blogService
+          .deleteItem(id)
+          // .getAll()
+          // .then(blogs => setBlogs( blogs.sort(compareLikes) )
+
+          .then(setBlogs(blogs.filter(blog => blog.id !== id ))) 
+      }
   }
 
 
@@ -162,8 +168,6 @@ const App = () => {
       {user ? userInfo() : loginForm()} 
       {user &&
         <div>
-          <p>{user.name} logged in</p>
-          {/* { blogForm() }  */}
           <Togglable buttonLabel="add new blog" ref={blogFormRef}>
             <BlogForm 
               createBlog={addBlog} 

@@ -7,7 +7,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb
 {
     "title": "Test run",
     "author": "TEST",
-    "url": "bing.com",
+    "url": "www.bing.com",
     "likes": 5
 }
 

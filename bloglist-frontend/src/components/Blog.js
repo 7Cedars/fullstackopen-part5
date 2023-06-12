@@ -42,7 +42,7 @@ const Blog = ({blog, addLikes, removeBlogs}) => {
           <div> {`Url: '${blog.url}' `}  </div> 
           <div> {`Likes: '${blog.likes}' `} <button onClick={addLike}> Like </button> </div> 
           <div> {`Created by: '${blog.user.name}' `} </div> 
-          <div> <button onClick={addLike}> Remove </button> </div>  
+          <div> <button onClick={removeBlog}> Remove </button> </div>  
         </div> 
         : null 
       } 
