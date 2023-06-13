@@ -31,7 +31,7 @@ describe('Blog app', function() {
       cy.get('#password').type('WRONG PASSWORD')
       cy.get('#login-button').click()
 
-      cy.contains('Wrong')
+      cy.get('.error').should('contain', 'Wrong')
     })
   })
 
@@ -39,11 +39,13 @@ describe('Blog app', function() {
     beforeEach(function() {
       cy.login({ username: '7Cedars', password: 'PleaseLetMeIn' })
 
-      cy.contains('add new blog').click()
-      cy.get('#blogTitle').type('This is a standard blog..')
-      cy.get('#blogAuthor').type('7Cedars')
-      cy.get('#blogUrl').type('localhost:3003')
-      cy.contains('Submit').click()
+      cy.createBlog({
+        title: 'Another blog',
+        author: 'Someone',
+        user: JSON.parse(localStorage.getItem('loggedNoteappUser')),
+        url: 'google.com',
+        likes: 0
+      })
     })
 
     it('A blog can be created', function() {
@@ -62,6 +64,13 @@ describe('Blog app', function() {
       cy.contains('view').click()
       cy.contains('Like').click()
       cy.contains('1')
+    })
+
+    it('A blog can be deleted', function() {
+      cy.contains('view').click()
+      cy.contains('Remove').click()
+
+      cy.contains('Another Blog').should('not.exist')
     })
 
 

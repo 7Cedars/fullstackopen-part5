@@ -32,3 +32,37 @@ Cypress.Commands.add('login', ({ username, password }) => {
     cy.visit('http://localhost:3000')
   })
 })
+
+Cypress.Commands.add('createBlog', ({ title, author, user, url, likes }) => {
+  cy.request({
+    url: 'http://localhost:3003/api/blogs',
+    method: 'POST',
+    body: {
+      title,
+      author,
+      user,
+      url,
+      likes },
+    headers: {
+      'Authorization': `Bearer ${JSON.parse(localStorage.getItem('loggedNoteappUser')).token}`
+    }
+  })
+
+  // const blogSchema = new mongoose.Schema({
+  //   title: {
+  //     type: String,
+  //     required: true},
+  //   author: {
+  //     type: String,
+  //     required: true},
+  //   user: {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: 'User'},
+  //   url: {
+  //     type: String, // (was string) should be URL - but have to clean database before I can do this.. 
+  //   },
+  //   likes: Number
+  // })
+
+  cy.visit('http://localhost:3000')
+})
