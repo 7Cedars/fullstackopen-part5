@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import blogs from '../services/blogs'
 
-const Blog = ({ blog, addLikes, removeBlogs }) => {
+const Blog = ({ blog, updateLikes, removeBlogs }) => {
 
   const blogStyle = {
     paddingTop: 10,
@@ -15,18 +14,18 @@ const Blog = ({ blog, addLikes, removeBlogs }) => {
 
   const toggleDetails = () => {
     setDetails(!details)
-    console.log(details)
+    // console.log(details)
   }
 
   const addLike = (event) => {
     event.preventDefault()
-    console.log('blog.id: ', blogs.id)
-    addLikes (blog.id, (blog.likes + 1))
+    // console.log('blog.id: ', blogs.id)
+    updateLikes (blog.id, (blog.likes + 1))
   }
 
   const removeBlog = (event) => {
     event.preventDefault()
-    console.log('RemoveBlog called on, blog id:', blog.id)
+    // console.log('RemoveBlog called on, blog id:', blog.id)
     removeBlogs(blog.id)
   }
 
@@ -40,7 +39,7 @@ const Blog = ({ blog, addLikes, removeBlogs }) => {
       {details ?
         <div>
           <div className="blogUrls"> {`Url: '${blog.url}' `} </div>
-          <div className="blogLikes"> {`Likes: '${blog.likes}' `} <button onClick={addLike}> Like </button> </div>
+          <div className="blogLikes"> {`Blog likes: '${blog.likes}' `} <button onClick={addLike} id='like-input'> Like </button> </div>
           <div className="blogUsername"> {`Created by: '${blog.user.name}' `} </div>
           <div className="blogRemoveButton"> <button onClick={removeBlog}> Remove </button> </div>
         </div>

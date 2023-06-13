@@ -17,7 +17,7 @@ describe('Togglable Blog Component', () => {
 
   beforeEach(() => {
     container = render(
-      <Blog blog={blog} />
+      <Blog blog={blog}/>
     ).container
   })
 
@@ -36,7 +36,7 @@ describe('Togglable Blog Component', () => {
     expect(likesElement).toBeNull()
   })
 
-  test('after clicking the view button, detailed content is displayed', async () => {
+  test('displays detailed content after view button is pressed', async () => {
     const user = userEvent.setup()
     const button = screen.getByText('view')
     await user.click(button)
@@ -47,6 +47,37 @@ describe('Togglable Blog Component', () => {
     const likesElement = screen.queryByText('Likes')
     expect(likesElement).toBeDefined()
   })
-
 })
+
+describe('The Like button', () => {
+
+  test('sends correct number of props', async () => {
+
+    const blog = {
+      title: 'Testing the Blog component',
+      author: 'ReactJS',
+      url: 'www.vercel.com',
+      user: '6486ddaee365d29b38fffc71',
+      likes: 0
+    }
+
+    const mockHandler = jest.fn(0 + 0)
+    // const mockUpdateLikes = jest.fn()
+
+    render(<Blog blog={blog} updateLikes = {mockHandler}  />)
+
+    const user = userEvent.setup()
+    const button = screen.getAllByText('view')
+    await user.click(button[0])
+
+    const likeButton = screen.queryAllByText('Like')
+    expect(likeButton[0]).toBeDefined()
+
+    await user.click(likeButton[0])
+    await user.click(likeButton[0])
+
+    expect(mockHandler.mock.calls).toHaveLength(2)
+  })
+})
+
 

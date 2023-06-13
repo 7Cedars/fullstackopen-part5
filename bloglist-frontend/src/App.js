@@ -89,15 +89,15 @@ const App = () => {
       })
   }
 
-  const addLikes = (id, newLikes) => {
-    console.log('id:', id)
-    console.log('blogs:', blogs)
-    let index = blogs.findIndex(blog => blog.id === id)
+  const updateLikes = (id, newLikes) => {
+    // console.log('id:', id)
+    // console.log('blogs:', blogs)
+    // let index = blogs.findIndex(blog => blog.id === id)
     const blog = blogs.find(b => b.id ===id)
     const changedBlog = { ...blog, likes: newLikes }
 
-    console.log('index: ', index)
-    console.log('changedBlog: ', changedBlog)
+    // console.log('index: ', index)
+    // console.log('changedBlog: ', changedBlog)
 
     blogService
       .update(id, changedBlog)
@@ -177,7 +177,7 @@ const App = () => {
       {blogs.map(blog =>
         <Blog key={blog.id}
           blog={blog}
-          addLikes={addLikes}
+          updateLikes={updateLikes}
           removeBlogs = {removeBlogs} />
       )}
     </div>
