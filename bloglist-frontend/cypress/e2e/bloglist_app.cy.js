@@ -38,6 +38,12 @@ describe('Blog app', function() {
   describe('When logged in', function() {
     beforeEach(function() {
       cy.login({ username: '7Cedars', password: 'PleaseLetMeIn' })
+
+      cy.contains('add new blog').click()
+      cy.get('#blogTitle').type('This is a standard blog..')
+      cy.get('#blogAuthor').type('7Cedars')
+      cy.get('#blogUrl').type('localhost:3003')
+      cy.contains('Submit').click()
     })
 
     it('A blog can be created', function() {
@@ -50,7 +56,15 @@ describe('Blog app', function() {
       cy.contains('Submit').click()
       cy.contains('Success')
       cy.contains('This is a test...')
-
     })
+
+    it('A blog can be liked', function() {
+      cy.contains('view').click()
+      cy.contains('Like').click()
+      cy.contains('1')
+    })
+
+
+
   })
 })
