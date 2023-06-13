@@ -4,7 +4,7 @@ describe('Blog app', function() {
     const user = {
       name: 'Seven Cedars',
       username: '7Cedars',
-      password: 'PleaseLetMeIn!'
+      password: 'PleaseLetMeIn'
     }
     cy.request('POST', 'http://localhost:3003/api/users/', user)
     cy.visit('http://localhost:3000')
@@ -20,7 +20,7 @@ describe('Blog app', function() {
   describe('Login',function() {
     it('succeeds with correct credentials', function() {
       cy.get('#username').type('7Cedars')
-      cy.get('#password').type('PleaseLetMeIn!')
+      cy.get('#password').type('PleaseLetMeIn')
       cy.get('#login-button').click()
 
       cy.contains('Seven Cedars')
@@ -35,4 +35,22 @@ describe('Blog app', function() {
     })
   })
 
+  describe('When logged in', function() {
+    beforeEach(function() {
+      cy.login({ username: '7Cedars', password: 'PleaseLetMeIn' })
+    })
+
+    it('A blog can be created', function() {
+      cy.contains('add new blog').click()
+
+      cy.get('#blogTitle').type('This is a test...')
+      cy.get('#blogAuthor').type('Cypress')
+      cy.get('#blogUrl').type('localhost:3000')
+
+      cy.contains('Submit').click()
+      cy.contains('Success')
+      cy.contains('This is a test...')
+
+    })
+  })
 })
