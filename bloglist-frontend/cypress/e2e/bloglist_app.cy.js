@@ -7,6 +7,14 @@ describe('Blog app', function() {
       password: 'PleaseLetMeIn'
     }
     cy.request('POST', 'http://localhost:3003/api/users/', user)
+
+    const user2 = {
+      name: 'Teije Hidde',
+      username: 'teijehidde',
+      password: '7Cedars'
+    }
+    cy.request('POST', 'http://localhost:3003/api/users/', user2)
+
     cy.visit('http://localhost:3000')
   })
 
@@ -73,7 +81,13 @@ describe('Blog app', function() {
       cy.contains('Another Blog').should('not.exist')
     })
 
+    it('Only shows Remove button when creator is logged in ', function() {
+      cy.contains('logout').click()
+      cy.login({ username: 'teijehidde', password: '7Cedars' })
 
-
+      cy.contains('view').click()
+      cy.contains('Remove').should('not.exist')
+    })
   })
+
 })

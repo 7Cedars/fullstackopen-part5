@@ -48,21 +48,5 @@ Cypress.Commands.add('createBlog', ({ title, author, user, url, likes }) => {
     }
   })
 
-  // const blogSchema = new mongoose.Schema({
-  //   title: {
-  //     type: String,
-  //     required: true},
-  //   author: {
-  //     type: String,
-  //     required: true},
-  //   user: {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'User'},
-  //   url: {
-  //     type: String, // (was string) should be URL - but have to clean database before I can do this.. 
-  //   },
-  //   likes: Number
-  // })
-
   cy.visit('http://localhost:3000')
 })

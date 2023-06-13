@@ -37,6 +37,7 @@ const App = () => {
         setErrorMessage(null)
       }, 5000)
     }
+    console.log('user: ', user)
   }
 
   const handleLogout = async (event) => {
@@ -72,6 +73,7 @@ const App = () => {
       .create(blogObject)
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))
+        console.log('returnedBlog: ', returnedBlog.user)
         setSuccessMessage(
           `Success! Blog '${blogObject.title}' by '${blogObject.author}' was saved.`
         )
@@ -180,7 +182,8 @@ const App = () => {
         <Blog key={blog.id}
           blog={blog}
           updateLikes={updateLikes}
-          removeBlogs = {removeBlogs} />
+          removeBlogs = {removeBlogs}
+          user = {user} />
       )}
     </div>
   )
