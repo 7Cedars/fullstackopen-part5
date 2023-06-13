@@ -62,7 +62,6 @@ describe('The Like button', () => {
     }
 
     const mockHandler = jest.fn(0 + 0)
-    // const mockUpdateLikes = jest.fn()
 
     render(<Blog blog={blog} updateLikes = {mockHandler}  />)
 
@@ -77,7 +76,7 @@ describe('The Like button', () => {
     await user.click(likeButton[0])
 
     expect(mockHandler.mock.calls).toHaveLength(2)
+
   })
 })
-
 
