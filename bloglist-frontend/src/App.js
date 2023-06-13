@@ -47,7 +47,7 @@ const App = () => {
   }
 
   const compareLikes = (a, b) => {
-    return a.likes - b.likes
+    return b.likes - (a.likes + 1)
   }
 
   useEffect(() => {
@@ -65,6 +65,10 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
+
+  useEffect(() => {
+    setBlogs( blogs.sort(compareLikes) )
+  }, [blogs])
 
   const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()

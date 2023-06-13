@@ -90,4 +90,67 @@ describe('Blog app', function() {
     })
   })
 
+  describe('Blogs sorting', function() {
+
+    beforeEach(function() {
+      cy.login({ username: '7Cedars', password: 'PleaseLetMeIn' })
+
+      cy.login({ username: '7Cedars', password: 'PleaseLetMeIn' })
+
+      cy.createBlog({
+        title: 'A blog less liked',
+        author: 'Noone?',
+        user: JSON.parse(localStorage.getItem('loggedNoteappUser')),
+        url: 'google.com',
+        likes: 0
+      })
+
+      cy.createBlog({
+        title: 'A most liked blog',
+        author: 'Someone',
+        user: JSON.parse(localStorage.getItem('loggedNoteappUser')),
+        url: 'google.com',
+        likes: 3
+      })
+
+      cy.createBlog({
+        title: 'A second most liked blog',
+        author: 'Someone else',
+        user: JSON.parse(localStorage.getItem('loggedNoteappUser')),
+        url: 'google.com',
+        likes: 2
+      })
+
+      cy.createBlog({
+        title: 'A third most liked blog',
+        author: 'Someone else',
+        user: JSON.parse(localStorage.getItem('loggedNoteappUser')),
+        url: 'google.com',
+        likes: 1
+      })
+    })
+
+    it('Correctly sorts blogs at startup', function() {
+
+      cy.get('.blog').eq(0).should('contain', 'most')
+      cy.get('.blog').eq(1).should('contain', 'second')
+      cy.get('.blog').eq(2).should('contain', 'third')
+
+    })
+
+    it('reorders blogs after likes are added', function() {
+
+      cy.contains('third most liked').parent().find('button').click()
+
+      cy.contains('Like').click()
+      cy.wait(500)
+      cy.contains('Like').click()
+      cy.wait(500)
+
+      cy.get('.blog').eq(0).should('contain', 'most')
+      cy.get('.blog').eq(1).should('contain', 'third')
+      cy.get('.blog').eq(2).should('contain', 'second')
+
+    })
+  })
 })
